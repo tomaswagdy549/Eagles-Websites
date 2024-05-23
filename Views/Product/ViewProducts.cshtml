@@ -1,0 +1,65 @@
+﻿@model Eagles_Website.ViewModels.CategoryProductViewModel
+
+@{
+    ViewData["Title"] = "ViewProducts";
+    Layout = "~/Views/Shared/_TemplateLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/Product/ProductView.css" />
+
+<section id="mobile-products" class="product-store position-relative padding-large no-padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="display-header d-flex align-items-center pb-3 justify-content-center">
+                <h2 class="display-7 text-dark text-uppercase text-center d-block">Products</h2>
+            </div>
+            <div class="pb-6 align-items-center justify-content-center d-flex">
+                @foreach (var category in Model.Categories)
+                {
+                    <button type="button" class="btn btn-primary m-5" data-category-id="@category.ID">@category.Name</button>
+                }
+            </div>
+        </div>
+
+        @foreach (var category in Model.Categories)
+        {
+            <div class="row">
+                @foreach (var product in Model.Products.Where(p => p.CategoryId == category.ID))
+                {
+                    <div class="col-md-3">
+                        <div class="product-card position-relative product" data-product-category-id="@product.CategoryId">
+                            <div class="image-holder">
+                                <img src="~/Images/Product/@product.ImageUrl" alt="@product.Name" class="img-fluid" style="width:100%; height:300px;">
+                            </div>
+                            <div class="cart-concern position-absolute">
+                                <div class="cart-button d-flex">
+                                    <a href="@Url.Action("Details", "Home", new { id = product.ID })" class="btn btn-medium btn-black">Add to Cart <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg></a>
+                                </div>
+                            </div>
+                            <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+                                <h3 class="card-title text-uppercase" style="font-size: 1.2rem;">@product.Name</h3>
+                                <span class="item-price text-primary" style="font-size: 0.9rem;">$@product.Price</span>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+<a href="~/lib/jquery/dist/jquery.min.map"></a>
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+<script src="~/js/ViewProducts.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.btn-primary').click(function () {
+            var categoryId = $(this).data('category-id');
+            $('.product-card').hide();
+            $('.product-card[data-product-category-id="' + categoryId + '"]').show(); 
+        });
+    });
+</script>

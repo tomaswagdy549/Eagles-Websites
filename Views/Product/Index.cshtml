@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Eagles_Website.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="mt-4">Product List</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Category ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td><img src="~/Images/Product/@item.ImageUrl" alt="@item.Name" style="width: 80px; height: 80px;" /></td>
+                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="@Url.Action("Edit",item)" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="@Url.Action("Details", item)" class="btn btn-sm btn-info">Details</a>
+                            <a href="@Url.Action("Delete", item)" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

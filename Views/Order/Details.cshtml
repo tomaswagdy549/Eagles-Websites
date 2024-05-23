@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Eagles_Website.Models.Order>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_TemplateLayout.cshtml";
+}
+
+<h1>Orders Details</h1>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Order Date</th>
+                <th>Items Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                    <td>
+                        @Html.ActionLink("Order Details", "ProductDetailsInformation", item.OrderDetails, new { @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
